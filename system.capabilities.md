@@ -2,41 +2,23 @@
 
 The system must be able to:
 
-1. Collect athlete profile data  
-   - Weight  
-   - Height  
-   - Running pace  
-   - Category  
-   - Experience level  
-
-2. Collect training data  
-   - Workouts  
-   - Intensity  
-   - Duration  
-   - Modality  
-
-3. Collect external data  
-   - Garmin or wearable metrics  
-
-4. Understand competition context  
-   - Event date  
-   - Category  
-   - Target time  
-
-5. Evaluate weekly alignment  
-   - Between training and competition goal  
-
-6. Detect misalignment  
-   - Training that does not contribute to HYROX performance  
-
-7. Provide corrective guidance  
-   - Clear, honest and actionable suggestions  
-
-8. Educate the athlete  
-   - Explain why a decision is good or bad  
-
-9. Adapt to limited time  
-   - Prioritize sessions with highest impact  
-
-10. Track long-term evolution  
-    - Progress toward competition readiness  
+1. Store athlete profile data  
+2. Store future competition context  
+3. Store weekly volume targets  
+4. Store training sessions  
+5. Track running kilometers by zone  
+6. Track fatigue context of runs  
+7. Track strength and mixed sessions  
+8. Track weekly remaining volume  
+9. Evaluate weekly alignment  
+10. Detect training gaps  
+11. Detect training risks  
+12. Generate alignment scores  
+13. Generate recommendations  
+14. Explain every recommendation  
+15. Track long-term progression  
+16. Support multiple competitions  
+17. Compare weeks  
+18. Highlight volume quality  
+19. Highlight fatigue exposure  
+20. Highlight race readiness
