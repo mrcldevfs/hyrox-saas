@@ -29,3 +29,28 @@ Architecture must prioritize:
 - Simplicity
 - Observability
 - Testability
+
+## Domain Driven View
+
+Core Domains:
+- Athlete Profile
+- Training Log
+- Competition Context
+- Performance Evaluation
+- Recommendation Engine
+
+Supporting Domains:
+- Data Ingestion
+- Analytics
+- Notification
+
+## AI Role
+
+AI is not a decision maker.
+AI is a reasoning assistant that supports alignment evaluation and education.
+
+## Architecture Philosophy
+
+- Complexity stays in the system
+- Simplicity stays in the user experience
+- Evolution is prioritized over perfection
