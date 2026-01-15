@@ -1,175 +1,83 @@
 # API Design
 
-This document defines the public and internal API contracts of the HYROX Decision Alignment Platform.
-The API is designed based on the Domain Model and supports evolutionary architecture.
-
----
-
-## API Principles
-
-* Domain-driven naming
-* Resource-oriented design
-* Context over convenience
-* Explicit relationships
-* Versioned from day one
-
----
-
-## Core Resources
-
-* Athlete
-* Competition
-* TrainingSession
-* WeeklyPlan
-* WeeklyVolumeTarget
-* WeeklyVolumeBalance
-* AlignmentResult
-* Recommendation
+The API supports weekly decision intelligence for HYROX athletes.
 
 ---
 
 ## Athlete
 
-### Create Athlete
-
-POST /api/v1/athletes
-
-Request:
-{
-"name": "John",
-"age": 35,
-"weight": 80,
-"height": 178,
-"category": "Men Open",
-"experienceLevel": "Intermediate"
-}
+POST /athletes  
+GET /athletes/{id}
 
 ---
 
 ## Competition
 
-### Create Competition
+POST /competitions  
+GET /competitions/{athleteId}
 
-POST /api/v1/athletes/{athleteId}/competitions
+---
 
-Request:
+## Weekly Volume Target
+
+POST /weekly-volume-targets  
+GET /weekly-volume-targets/{athleteId}/{week}
+
+---
+
+## Training Sessions
+
+POST /training-sessions  
+GET /training-sessions/{athleteId}/{week}
+
+Example:
+
 {
-"eventName": "HYROX Berlin",
-"eventDate": "2026-05-10",
-"category": "Men Open",
-"targetTime": "01:05:00"
+  "date": "2026-01-12",
+  "modality": "run",
+  "durationMinutes": 65,
+  "z1z2Km": 5,
+  "z3Km": 2,
+  "z4z5Km": 1,
+  "fatigueContext": "under_fatigue"
 }
 
 ---
 
-## Training Session
+## Weekly Evaluation
 
-### Log Training Session
+GET /weekly-summary/{athleteId}/{week}
 
-POST /api/v1/athletes/{athleteId}/training-sessions
+Returns:
 
-Request:
 {
-"date": "2026-01-15",
-"duration": 75,
-"intensity": "High",
-"modality": "Mixed",
-"exercises": ["Wall Balls", "Running", "Sled Push"],
-"perceivedEffort": 8,
-"volumeContribution": {
-"running": 5,
-"strength": 4,
-"mixed": 3
+  "alignmentScore": 82,
+  "runningQualityScore": 78,
+  "fatigueExposureScore": 65,
+  "flags": ["low_fatigue_running"],
+  "remainingVolume": {
+    "z1z2Km": 3,
+    "z3Km": 1,
+    "z4z5Km": 2,
+    "fatigueKm": 2
+  }
 }
-}
-
-Behavior:
-
-* Deducts volume from WeeklyVolumeTarget
-* Recalculates WeeklyVolumeBalance
 
 ---
 
-## Weekly Plan
+## Weekly Recommendation
 
-### Get Weekly Plan
+GET /weekly-recommendation/{athleteId}/{week}
 
-GET /api/v1/athletes/{athleteId}/weekly-plan?week=2026-01-12
+Returns:
 
----
-
-## Volume Balance
-
-### Get Weekly Volume Balance
-
-GET /api/v1/athletes/{athleteId}/weekly-volume-balance?week=2026-01-12
-
----
-
-## Alignment
-
-### Evaluate Weekly Alignment
-
-POST /api/v1/athletes/{athleteId}/alignment
-
-Request:
 {
-"week": "2026-01-12",
-"competitionId": "123"
+  "recommendations": [
+    {
+      "type": "add",
+      "modality": "run",
+      "reason": "Low fatigue exposure",
+      "explanation": "HYROX requires running under fatigue. Add one 3km Z2 run after a strength session."
+    }
+  ]
 }
-
-Response:
-{
-"score": 82,
-"strengths": ["Running volume is well distributed"],
-"gaps": ["Low sled exposure"],
-"risks": ["Strength fatigue risk"]
-}
-
----
-
-## Recommendation
-
-### Get Recommendations
-
-GET /api/v1/athletes/{athleteId}/recommendations?week=2026-01-12
-
----
-
-## AI Integration
-
-The AI layer is invoked internally by the backend for:
-
-* Alignment interpretation
-* Recommendation generation
-* Explanation generation
-
-The AI is not directly exposed to clients.
-
----
-
-## Error Handling
-
-Standard error format:
-{
-"errorCode": "INVALID_INPUT",
-"message": "Running volume cannot be negative"
-}
-
----
-
-## Versioning Strategy
-
-* /api/v1/ is mandatory
-* Breaking changes require new version
-
----
-
-## Engineering Manager Perspective
-
-This API design:
-
-* Follows domain language
-* Supports evolutionary architecture
-* Protects business rules
-* Enables service extraction
