@@ -1,45 +1,14 @@
 # User Journey
 
-## Onboarding
+1. Athlete creates profile  
+2. Athlete sets competition and target time  
+3. Athlete defines weekly volume expectations  
+4. Athlete logs training sessions  
+5. System updates weekly balance  
+6. Athlete requests weekly evaluation  
+7. System returns alignment score  
+8. System explains strengths and gaps  
+9. Athlete adjusts next week  
+10. Athlete repeats weekly cycle
 
-The user provides:
-- Personal data
-- Running paces
-- Training availability
-- Competition date and category
-
-## Daily Use
-
-The user logs:
-- Workout performed
-- Intensity perception
-- Additional notes
-
-The system:
-- Evaluates alignment with competition goal
-- Classifies the workout as aligned or misaligned
-- Explains the impact
-
-## Weekly Review
-
-The system:
-- Analyzes weekly balance
-- Highlights strengths and gaps
-- Suggests focus areas
-
-## Decision Support
-
-The user asks:
-"Should I do this workout tomorrow?"
-
-The system answers with:
-- Yes or No
-- Explanation
-- Alternative suggestion if needed
-
-## Long Term
-
-The user gains:
-- Strategic thinking
-- Training awareness
-- Performance discipline
+The product operates in weekly learning loops.
