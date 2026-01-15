@@ -13,3 +13,8 @@ The goal is not to build the system, but to design, manage and reason about engi
 The product is inspired by HYROX competitions and focuses on tracking athlete performance, rankings and progression.
 
 This project is used purely for learning and leadership development purposes.
+
+## Product Statement
+
+This is not a training app.  
+It is a decision alignment system for disciplined amateurs preparing for HYROX.

@@ -48,3 +48,10 @@ The system discourages activities that do not contribute to the defined HYROX ob
 
 7. Reality-Based Performance  
 Recommendations respect time availability, recovery and real-life constraints.
+
+# Product Vision
+
+## Core Product Statement
+
+This is not a training app.  
+It is a decision alignment system for disciplined amateurs preparing for HYROX.
