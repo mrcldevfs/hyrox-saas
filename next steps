@@ -1,7 +1,19 @@
 Criar Diagrama da aplicação
 https://excalidraw.com/#json=43Fvs_0XRlV2d6xss1I8x,TJHSz2mtXFCD0XIc5X1Z1A
 
+Melhorar o workflow e a conexão entre as duas últimas partes
+
 Criar um banco para armazenar as informações de perfil
+Criei um banco no SupaBase de Postgree
+
 Explicar a decisão do banco
+Preciso explicar a razão de usar este banco
+
 Manipular o banco via API
+consegui rodar postman pra ver o resultado
+
+
+Empacotar a aplicação e colocar na nuvem para acesso remoto
+Estudar pipeline, deployment
+
 
