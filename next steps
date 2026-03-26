@@ -23,6 +23,6 @@ Escrever testes que reproduzem um bug real antes de corrigi-lo (Test-Driven Bug 
 Garantir que alterações não quebrem o pipeline
 Configurar testes automatizados que rodam a cada push/PR, bloqueando merge se houver falha
 
-Jenkins, RPN e Azure
-Estudar e configurar pipeline CI/CD com Jenkins (orquestrador), integração com Azure (cloud) e entender o papel do RPN no fluxo
+Jenkins e Azure
+Estudar e configurar pipeline CI/CD com Jenkins (orquestrador) e integração com Azure (cloud)
 
