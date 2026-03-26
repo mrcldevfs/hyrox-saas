@@ -28,6 +28,11 @@ export function createAthleteForm(userId) {
     const birth_date = document.querySelector('#birth_date').value
     const height_cm = parseInt(document.querySelector('#height_cm').value)
     const weight_kg = parseInt(document.querySelector('#weight_kg').value)
+
+    if (isNaN(height_cm) || isNaN(weight_kg)) {
+      result.textContent = 'Altura e peso são obrigatórios'
+      return
+    }
     const category = document.querySelector('#category').value
     const experience_level = document.querySelector('#experience_level').value
 

@@ -202,4 +202,40 @@ describe('createAthleteForm', () => {
       expect(dadosInseridos.user_id).toBe(userId)
     })
   })
+
+  // -------------------------------------------------------------------------
+  // TESTE 6: Campos numéricos vazios (bug NaN)
+  //
+  // Ciclo TDD:
+  //   → este teste foi escrito ANTES da correção no código
+  //   → roda agora: FALHA (vermelho)
+  //   → corrigimos o athlete.js
+  //   → roda de novo: PASSA (verde)
+  //
+  // Cenário: usuário submete o formulário sem preencher altura e peso.
+  // Esperado: exibir mensagem de validação, NÃO chamar o Supabase.
+  // -------------------------------------------------------------------------
+  it('exibe erro de validação e não chama o Supabase quando altura ou peso estão vazios', async () => {
+    createAthleteForm('usuario-id-qualquer')
+
+    // Preenche tudo EXCETO altura e peso
+    document.querySelector('#birth_date').value = '1990-05-15'
+    document.querySelector('#height_cm').value = ''
+    document.querySelector('#weight_kg').value = ''
+    document.querySelector('#category').value = 'Open'
+    document.querySelector('#experience_level').value = 'Beginner'
+
+    const evento = new Event('submit')
+    evento.preventDefault = vi.fn()
+    document.querySelector('#athlete-form').dispatchEvent(evento)
+
+    await vi.waitFor(() => {
+      // Deve exibir mensagem de erro de validação
+      const result = document.querySelector('#result')
+      expect(result.textContent).toContain('Altura e peso são obrigatórios')
+
+      // O Supabase NÃO deve ter sido chamado
+      expect(supabase.from).not.toHaveBeenCalled()
+    })
+  })
 })
