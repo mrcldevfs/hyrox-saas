@@ -31,7 +31,7 @@ export function createAthleteForm(userId) {
     const category = document.querySelector('#category').value
     const experience_level = document.querySelector('#experience_level').value
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('athlete_profiles') // tabela correta
       .insert([{
         user_id: userId,
@@ -47,7 +47,7 @@ export function createAthleteForm(userId) {
     if (error) {
       result.textContent = JSON.stringify(error, null, 2)
     } else {
-      result.textContent = "Profile saved:\n" + JSON.stringify(data, null, 2)
+      app.innerHTML = `<h1>Registro concluído!</h1><p>Seu perfil de atleta foi salvo com sucesso.</p>`
     }
   })
 }

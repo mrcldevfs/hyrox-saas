@@ -17,3 +17,12 @@ Empacotar a aplicação e colocar na nuvem para acesso remoto
 Estudar pipeline, deployment
 
 
+Criar unit test baseado no erro
+Escrever testes que reproduzem um bug real antes de corrigi-lo (Test-Driven Bug Fix)
+
+Garantir que alterações não quebrem o pipeline
+Configurar testes automatizados que rodam a cada push/PR, bloqueando merge se houver falha
+
+Jenkins, RPN e Azure
+Estudar e configurar pipeline CI/CD com Jenkins (orquestrador), integração com Azure (cloud) e entender o papel do RPN no fluxo
+
