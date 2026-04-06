@@ -43,11 +43,20 @@ jobs:
         run: npm test
         working-directory: frontend
 
-  deploy:
-    name: Deploy para Render
+  deploy-staging:
+    name: Deploy para Staging
     runs-on: ubuntu-latest
     needs: test  # só executa se o job de testes passar
 
     steps:
-      - name: Acionar deploy no Render
-        run: curl -s "${{ secrets.RENDER_DEPLOY_HOOK }}"
+      - name: Acionar deploy no Render (staging)
+        run: curl -s "${{ secrets.RENDER_DEPLOY_HOOK_STAGING }}"
+
+  deploy-production:
+    name: Deploy para Produção
+    runs-on: ubuntu-latest
+    needs: deploy-staging  # só executa se o staging passar
+
+    steps:
+      - name: Acionar deploy no Render (produção)
+        run: curl -s "${{ secrets.RENDER_DEPLOY_HOOK_PRODUCTION }}"
