@@ -52,10 +52,22 @@ jobs:
       - name: Acionar deploy no Render (staging)
         run: curl -s "${{ secrets.RENDER_DEPLOY_HOOK_STAGING }}"
 
+  smoke-test:
+    name: Smoke Test (Staging)
+    runs-on: ubuntu-latest
+    needs: deploy-staging  # só executa após o staging subir
+
+    steps:
+      - name: Aguardar Render finalizar o deploy
+        run: sleep 30
+
+      - name: Verificar se o staging está respondendo
+        run: curl --fail --silent --max-time 15 https://hyrox-saas-staging.onrender.com
+
   deploy-production:
     name: Deploy para Produção
     runs-on: ubuntu-latest
-    needs: deploy-staging  # só executa se o staging passar
+    needs: smoke-test  # só executa se o smoke test passar
 
     steps:
       - name: Acionar deploy no Render (produção)
