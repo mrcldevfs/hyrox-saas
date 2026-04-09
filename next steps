@@ -26,3 +26,12 @@ Configurar testes automatizados que rodam a cada push/PR, bloqueando merge se ho
 Jenkins e Azure
 Estudar e configurar pipeline CI/CD com Jenkins (orquestrador) e integração com Azure (cloud)
 
+CI/CD completo implementado ✅
+Pipeline no GitHub Actions com 4 jobs em cadeia:
+  1. Unit Tests — roda os 8 testes automatizados
+  2. Deploy Staging — sobe a versão no ambiente de staging (Render)
+  3. Smoke Test — verifica se o staging está respondendo (curl na URL)
+  4. Deploy Produção — só executa se staging e smoke test passarem
+Credenciais do Supabase movidas para variáveis de ambiente (.env),
+removidas do código-fonte e configuradas como secrets no Render e GitHub.
+
