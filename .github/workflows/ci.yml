@@ -87,6 +87,13 @@ jobs:
         run: npx playwright test --config=playwright.config.js
         working-directory: frontend
 
+      - name: Salvar screenshots e logs de debug
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-debug
+          path: frontend/test-results/
+
   deploy-canary:
     name: Deploy para Canary
     runs-on: ubuntu-latest

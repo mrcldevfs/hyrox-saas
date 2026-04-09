@@ -14,6 +14,13 @@ const STAGING_URL = 'https://hyrox-saas-staging.onrender.com'
 test('página carrega e exibe o formulário de cadastro', async ({ page }) => {
   await page.goto(STAGING_URL)
 
+  // Debug: loga o HTML da página para ver o que foi carregado
+  const html = await page.content()
+  console.log('PAGE HTML:', html.substring(0, 2000))
+
+  // Captura screenshot para inspecionar visualmente
+  await page.screenshot({ path: 'test-results/debug-staging.png', fullPage: true })
+
   // Aguarda o JS renderizar o formulário (injetado dinamicamente por createUsersForm)
   await page.waitForSelector('#user-form', { timeout: 20000 })
 
