@@ -1,10 +1,7 @@
 # CI Pipeline — hyrox-saas
 #
-# O que faz:
-#   - Roda automaticamente a cada push e pull request na branch main
-#   - Instala as dependências do frontend
-#   - Executa todos os unit tests
-#   - Se algum teste falhar, o pipeline bloqueia o merge
+# Fluxo completo:
+#   test → deploy-staging → smoke-test → synthetic-test → deploy-canary → monitor-canary → deploy-production
 #
 # Onde ver o resultado:
 #   GitHub → aba "Actions" do repositório
@@ -46,7 +43,7 @@ jobs:
   deploy-staging:
     name: Deploy para Staging
     runs-on: ubuntu-latest
-    needs: test  # só executa se o job de testes passar
+    needs: test
 
     steps:
       - name: Acionar deploy no Render (staging)
@@ -55,7 +52,7 @@ jobs:
   smoke-test:
     name: Smoke Test (Staging)
     runs-on: ubuntu-latest
-    needs: deploy-staging  # só executa após o staging subir
+    needs: deploy-staging
 
     steps:
       - name: Aguardar Render finalizar o deploy
@@ -64,10 +61,63 @@ jobs:
       - name: Verificar se o staging está respondendo
         run: curl --fail --silent --max-time 15 https://hyrox-saas-staging.onrender.com
 
+  synthetic-test:
+    name: Synthetic Test (Staging)
+    runs-on: ubuntu-latest
+    needs: smoke-test
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Instalar dependências
+        run: npm install
+        working-directory: frontend
+
+      - name: Instalar browsers do Playwright
+        run: npx playwright install --with-deps chromium
+        working-directory: frontend
+
+      - name: Rodar testes sintéticos no staging
+        run: npx playwright test --config=playwright.config.js
+        working-directory: frontend
+
+  deploy-canary:
+    name: Deploy para Canary
+    runs-on: ubuntu-latest
+    needs: synthetic-test
+
+    steps:
+      - name: Acionar deploy no Render (canary)
+        run: curl -s "${{ secrets.RENDER_DEPLOY_HOOK_CANARY }}"
+
+  monitor-canary:
+    name: Monitor Canary (60s)
+    runs-on: ubuntu-latest
+    needs: deploy-canary
+
+    steps:
+      - name: Aguardar Render finalizar o deploy canary
+        run: sleep 30
+
+      - name: Verificar canary a cada 10s por 60s
+        run: |
+          for i in 1 2 3 4 5 6; do
+            echo "Verificação $i/6..."
+            curl --fail --silent --max-time 10 https://hyrox-saas-canary.onrender.com
+            echo " OK"
+            sleep 10
+          done
+
   deploy-production:
     name: Deploy para Produção
     runs-on: ubuntu-latest
-    needs: smoke-test  # só executa se o smoke test passar
+    needs: monitor-canary
 
     steps:
       - name: Acionar deploy no Render (produção)
