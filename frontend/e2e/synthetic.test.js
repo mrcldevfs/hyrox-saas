@@ -12,21 +12,21 @@ import { test, expect } from '@playwright/test'
 const STAGING_URL = 'https://hyrox-saas-staging.onrender.com'
 
 test('página carrega e exibe o formulário de cadastro', async ({ page }) => {
-  await page.goto(STAGING_URL)
+  await page.goto(STAGING_URL, { waitUntil: 'networkidle' })
 
-  // Verifica que o formulário de usuário aparece
-  await expect(page.locator('#user-form')).toBeVisible()
+  // Verifica que o formulário de usuário aparece (até 15s para JS renderizar)
+  await expect(page.locator('#user-form')).toBeVisible({ timeout: 15000 })
 
   // Verifica que os campos existem
-  await expect(page.locator('#name')).toBeVisible()
-  await expect(page.locator('#email')).toBeVisible()
+  await expect(page.locator('#name')).toBeVisible({ timeout: 15000 })
+  await expect(page.locator('#email')).toBeVisible({ timeout: 15000 })
 
   // Verifica que o botão de submit existe
-  await expect(page.locator('button[type="submit"]')).toBeVisible()
+  await expect(page.locator('button[type="submit"]')).toBeVisible({ timeout: 15000 })
 })
 
 test('formulário aceita input do usuário', async ({ page }) => {
-  await page.goto(STAGING_URL)
+  await page.goto(STAGING_URL, { waitUntil: 'networkidle' })
 
   // Preenche o formulário como um usuário real faria
   await page.fill('#name', 'Atleta Teste')
