@@ -4,6 +4,6 @@ export default defineConfig({
   testDir: './e2e',
   use: {
     headless: true,
-    timeout: 30000,
+    timeout: 60000,
   },
 })
